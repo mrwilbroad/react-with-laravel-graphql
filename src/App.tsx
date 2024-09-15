@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import NavBarComponent from "./component/navbar/NavBar";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <NavBarComponent />
+      <Routes>
+            <Route path="/" Component={HomePage}>
+                <Route path="users" Component={UserPage}/>
+            </Route>
+      </Routes>
+    </React.Fragment>
   );
 }
 
