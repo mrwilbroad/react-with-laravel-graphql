@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* color: #13ce13; */
 }
 
 code {
@@ -12,4 +13,8 @@ code {
     monospace;
 }
 
+
+a{
+  text-decoration: none !important;
+}
 

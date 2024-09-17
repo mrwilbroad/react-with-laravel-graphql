@@ -1,19 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { ENV } from "./environment/environment";
+
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+// apollo
+const client = new ApolloClient({
+  uri: ENV.ONPRODUCTION ? ENV.GRAPHQL_ENDPOINT_PROD : ENV.GRAPHQL_ENDPOINT_DEV,
+  cache: new InMemoryCache(),
+});
+
+
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <App />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
