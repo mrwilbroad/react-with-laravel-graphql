@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import { Form, Formik } from "formik";
 import TextField from "../../component/Form/TextField";
 import LabelField from "../../component/Form/LabelField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_MUTATION } from "./../../graphql/Mutations/Auth/Login";
 import { useQuery, gql, NetworkStatus, useMutation } from "@apollo/client";
 import AppLoader from "./../../component/loading/AppLoader";
@@ -24,6 +24,9 @@ export interface LoginResponse {
 }
 
 const Login = () => {
+  const { Login } = useAuth();
+  const Navigate = useNavigate();
+
   const [AuthLogin, { data, error, loading }] =
     useMutation<LoginResponse>(LOGIN_MUTATION);
 
@@ -50,20 +53,26 @@ const Login = () => {
                     password: values.password ?? "",
                   },
                 }).then((res) => {
-                     const errors = res.data?.AuthLogin.errors;
-                      if(errors?.email) 
-                        setFieldError("email", errors.email[0])
+                  const errors = res.data?.AuthLogin.errors;
+                  const token = res.data?.AuthLogin.token;
 
-                      if(errors?.password) 
-                        setFieldError("password", errors.password[0])
+                  if (errors?.email) {
+                    setFieldError("email", errors.email[0]);
+                  }
 
-                      if(errors?.global) 
-                        setFieldError("global", errors.global[0])
+                  if (errors?.password) {
+                    setFieldError("password", errors.password[0]);
+                  }
 
-                      
+                  if (errors?.global) {
+                    setFieldError("email", errors.global[0]);
+                  } else if (token) {
+                    Login(token);
+                    Navigate("/", { replace: true });
+                  }
                 });
               } catch (error) {
-                console.log(error)
+                console.log(error);
                 setFieldError("email", "something went wrong , try again");
               }
             }}
