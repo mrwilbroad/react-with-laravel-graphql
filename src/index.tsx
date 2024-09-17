@@ -12,6 +12,12 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 const client = new ApolloClient({
   uri: ENV.ONPRODUCTION ? ENV.GRAPHQL_ENDPOINT_PROD : ENV.GRAPHQL_ENDPOINT_DEV,
   cache: new InMemoryCache(),
+  defaultOptions : {
+    watchQuery : {
+      fetchPolicy : "network-only",
+      nextFetchPolicy : "cache-first"
+    }
+  }
 });
 
 
