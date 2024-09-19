@@ -8,7 +8,8 @@ import UserPage from "./pages/UserPage";
 import AppLoader from "./component/loading/AppLoader";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import { AuthProvider } from "./context/Auth";
+import { AuthProvider } from "./context/auth/Auth";
+import ProfilePage from "./pages/dashboard/ProfilePage";
 
 
 
@@ -28,6 +29,7 @@ function App() {
 
           <Route path="/" Component={HomePage}>
             <Route path="users" element={<UserPage />} />
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
         </Routes>
       </Suspense>

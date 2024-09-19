@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_MUTATION } from "./../../graphql/Mutations/Auth/Login";
 import { useQuery, gql, NetworkStatus, useMutation } from "@apollo/client";
 import AppLoader from "./../../component/loading/AppLoader";
-import { useAuth } from "./../../context/Auth";
+import { useAuth } from "../../context/auth/Auth";
 import { User } from "../../type/Model/User.model";
 
 export interface LoginResponse {

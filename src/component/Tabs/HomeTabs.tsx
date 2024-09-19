@@ -18,6 +18,9 @@ const HomeTabs = () => {
             <Nav.Item >
                 <Link className="nav-link" to={'/users'}>Users</Link>
             </Nav.Item>
+            <Nav.Item >
+                <Link className="nav-link" to={'/profile'}>Profile</Link>
+            </Nav.Item>
           </Nav>
         </Col>
         <Col sm={9}>

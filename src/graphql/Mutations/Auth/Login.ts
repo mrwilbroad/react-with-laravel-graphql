@@ -1,4 +1,4 @@
-import { gql, type TypedDocumentNode } from "@apollo/client";
+import { gql} from "@apollo/client";
 
 
 interface LoginMutationProps

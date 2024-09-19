@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import NavBarComponent from "../component/navbar/NavBar";
-import { useAuth } from "../context/Auth";
+import { useAuth } from "../context/auth/Auth";
 import { useNavigate } from "react-router-dom";
 
 export interface AuthLayoutProps {

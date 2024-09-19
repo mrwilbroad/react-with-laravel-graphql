@@ -6,20 +6,41 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { ENV } from "./environment/environment";
 
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+const apolloLink = createHttpLink({
+  uri: ENV.ONPRODUCTION ? ENV.GRAPHQL_ENDPOINT_PROD : ENV.GRAPHQL_ENDPOINT_DEV,
+  credentials: "same-origin",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
 
 // apollo
 const client = new ApolloClient({
-  uri: ENV.ONPRODUCTION ? ENV.GRAPHQL_ENDPOINT_PROD : ENV.GRAPHQL_ENDPOINT_DEV,
+  link: authLink.concat(apolloLink),
   cache: new InMemoryCache(),
-  defaultOptions : {
-    watchQuery : {
-      fetchPolicy : "network-only",
-      nextFetchPolicy : "cache-first"
-    }
-  }
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: "network-only",
+      nextFetchPolicy: "cache-first",
+    },
+  },
 });
-
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -33,7 +54,6 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
